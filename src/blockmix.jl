@@ -44,7 +44,7 @@ function cs_tssos_first(pop,x,d;nb=0,numeq=0,CS="MD",minimize=false,assign="min"
         dg[i]=maxdegree(pop[i+1])
     end
     cliques,cql,cliquesize=clique_decomp(n,m,dg,supp,order=d,alg=CS,minimize=minimize)
-    I,ncc=assign_constraint(m,numeq,supp,cliques,cql,cliquesize,assign=assign)
+    I,ncc=assign_constraint(m,supp,cliques,cql,cliquesize,assign=assign)
     rlorder=init_order(dg,I,cql,order=d)
     blocks,cl,blocksize,ub,sizes,ssupp,lt,fbasis,gbasis,status=get_cblocks_mix!(dg,I,rlorder,m,supp,cliques,cql,cliquesize,nb=nb,TS=TS)
     opt,supp0,_,_,moment=blockcpop_mix(n,m,dg,rlorder,supp,coe,cliques,cql,cliquesize,I,ncc,blocks,cl,blocksize,nb=nb,numeq=numeq,TS=TS,QUIET=QUIET,solve=solve,solution=solution,extra_sos=extra_sos)
@@ -63,7 +63,7 @@ function cs_tssos_first(supp::Vector{SparseMatrixCSC{UInt8,UInt32}},coe::Vector{
     if CTP==false
         I,ncc=assign_constraint(m,supp,cliques,cql,cliquesize,assign=assign)
     else
-        I,ncc=assign_constraint(m,numeq,supp,cliques,cql,cliquesize,assign=assign)
+        I,ncc=assign_constraint(m,supp,cliques,cql,cliquesize,assign=assign)
     end
     rlorder=init_order(dg,I,cql,order=d)
     blocks,cl,blocksize,ub,sizes,ssupp,lt,fbasis,gbasis,status=get_cblocks_mix!(dg,I,rlorder,m,supp,cliques,cql,cliquesize,nb=nb,TS=TS)
